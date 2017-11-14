@@ -1,0 +1,105 @@
+VMF File Format Specification
+v4.0 / 19-05-2014
+
+Header
+------
+
+4 bytes		| VMFX format ID
+4 bytes		| header version (0x0004)
+4 bytes		| total number of faces
+4 bytes		| number of submeshes
+4 bytes		| full timeline animation length (dword, milliseconds)
+4 bytes		| number of animations
+n bytes		| submeshes
+n bytes		| animations
+
+Submesh
+-------
+
+4 bytes		| SBMX ID
+4 bytes		| submesh version (0x0004)
+4 bytes		| length of submesh structure
+64 bytes	| submesh name string
+64 bytes	| submesh matrix (4x4 float)
+4 bytes		| TEXX ID
+4 bytes		| number of textures
+n bytes		| texture structures
+4 bytes		| VTXX ID
+4 bytes		| number of vertices
+n bytes		| vertex structures
+4 bytes		| TVTX ID
+4 bytes		| number of tex vertices
+n bytes		| tex vertex structures
+4 bytes		| NRMX ID
+4 bytes		| number of normals
+n bytes		| normal structures
+4 bytes		| FCXX ID
+4 bytes		| number of faces
+n bytes		| face structures
+4 bytes		| KEYX ID
+4 bytes		| number of position keyframes
+4 bytes		| number of rotation keyframes
+4 bytes		| number of scale keyframes
+n bytes		| position keyframe structures
+n bytes		| rotation keyframe structures
+n bytes		| scale keyframe structures
+
+
+Texture structure
+-----------------
+
+4 bytes		| texture type
+		  0x0001 = diffuse
+		  0x0002 = bump
+		  0x0003 = opacity
+64 bytes	| texture name string
+
+Vertex structure
+----------------
+
+12 bytes	| XYZ coords, 3x float
+
+Tex vertex structure
+--------------------
+
+8 bytes		| UV coords, 2x float
+
+Normal structure
+----------------
+
+12 bytes	| XYZ coords, 3x float
+
+Face structure
+--------------
+
+12 bytes	| vertex indices, 3x dword
+12 bytes	| tex vertex indices, 3x dword
+12 bytes	| normal indices, 3x dword
+
+Position keyframe N (XYZ) structure
+---------------------------
+
+4 bytes		| keyframe timestamp, dword (milliseconds)
+12 bytes	| coord XYZ, 3x float
+
+Rotation keyframe N (XYZW, quaternion) structure
+---------------------------
+
+4 bytes		| keyframe timestamp, dword (milliseconds)
+16 bytes	| rotation quaternion, 4x float
+
+Scale keyframe N (XYZ) structure
+---------------------------
+
+4 bytes		| keyframe timestamp, dword (milliseconds)
+12 bytes	| scale XYZ, 3x float
+
+
+
+Animations
+----------
+
+4 bytes		| ANMX ID
+64 bytes	| animation name
+4 bytes		| animation start timestamp, dword (milliseconds)
+4 bytes		| animation end timestamp, dword (milliseconds)
