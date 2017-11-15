@@ -8,14 +8,13 @@ VMFExport::~VMFExport()
 {
 }
 
-bool VMFExport::write(std::string filename, Mesh* mesh, vector<AnimList::AnimListEntry> &animations)
+bool VMFExport::write(std::string filename, Mesh* mesh)
 {
 	BinaryFile output;
 
 	try
 	{
 		int num_submeshes = mesh->getNumSubMeshes();
-		int num_animations = (int)animations.size();
 
 		output.open(filename, BinaryFile::MODE_WRITEONLY);
 
@@ -37,12 +36,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh, vector<AnimList::AnimLis
 		// number of submeshes
 		output.write_dword(num_submeshes);
 
-		// full timeline animation length (milliseconds)
-		output.write_dword(mesh->getEndTime());
-
-		// number of animations
-		output.write_dword(num_animations);
-
 
 		// submeshes
 		for (int sbi=0; sbi < num_submeshes; sbi++)
@@ -53,10 +46,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh, vector<AnimList::AnimLis
 			int num_tverts = (int)sb.uvcoord.size();
 			int num_normals = (int)sb.normal.size();
 			int num_faces = (int)sb.tris.size();
-
-			int num_pos_kfs = (int)sb.pos_keys.size();
-			int num_rot_kfs = (int)sb.rot_keys.size();
-			int num_scale_kfs = (int)sb.scl_keys.size();
 
 			int submesh_structure_length = 0;
 			submesh_structure_length += 64;								// name
@@ -80,9 +69,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh, vector<AnimList::AnimLis
 			submesh_structure_length += 4;								// num of pos keyframes
 			submesh_structure_length += 4;								// num of rot keyframes
 			submesh_structure_length += 4;								// num of scale keyframes
-			submesh_structure_length += (int)(num_pos_kfs) * (4+12);	// pos keyframes
-			submesh_structure_length += (int)(num_rot_kfs) * (4+16);	// rot keyframes
-			submesh_structure_length += (int)(num_scale_kfs) * (4+12);	// scale keyframes
 
 			// submesh header
 			// --------------------------------------------------------------------------
@@ -206,79 +192,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh, vector<AnimList::AnimLis
 				output.write_dword(sb.tris[i].n[1]);
 				output.write_dword(sb.tris[i].n[2]);
 			}
-
-			// keyframes
-			// --------------------------------------------------------------------------
-
-			// keyframe id
-			output.write_dword(VMF_KEY_ID);
-
-			// number of position keyframes
-			output.write_dword(num_pos_kfs);
-			
-			// number of rotation keyframes
-			output.write_dword(num_rot_kfs);
-
-			// number of scale keyframes
-			output.write_dword(num_scale_kfs);
-
-			// position keyframes
-			for (int i=0; i < num_pos_kfs; i++)
-			{
-				// time
-				output.write_dword(sb.pos_keys[i].time);
-
-				// coord
-				output.write_float(sb.pos_keys[i].pos.x);
-				output.write_float(sb.pos_keys[i].pos.y);
-				output.write_float(sb.pos_keys[i].pos.z);
-			}
-
-			// rotation keyframes
-			for (int i=0; i < num_rot_kfs; i++)
-			{
-				// time
-				output.write_dword(sb.rot_keys[i].time);
-
-				// quaternion rotation
-				output.write_float(sb.rot_keys[i].rot.x);
-				output.write_float(sb.rot_keys[i].rot.y);
-				output.write_float(sb.rot_keys[i].rot.z);
-				output.write_float(sb.rot_keys[i].rot.w);
-			}
-
-			// scale keyframes
-			for (int i=0; i < num_scale_kfs; i++)
-			{
-				// time
-				output.write_dword(sb.scl_keys[i].time);
-
-				// scale
-				output.write_float(sb.scl_keys[i].scale.x);
-				output.write_float(sb.scl_keys[i].scale.y);
-				output.write_float(sb.scl_keys[i].scale.z);
-			}
-
-		}
-
-
-		// animations
-		for (int i=0; i < num_animations; i++)
-		{
-			// anim id
-			output.write_dword(VMF_ANIM_ID);
-
-			// anim name
-			char animname[64];
-			memset(animname, 0, 64);
-			strcpy(animname, animations[i].name.c_str());
-			output.write(animname, 64);
-
-			// anim start time
-			output.write_dword(animations[i].start);
-
-			// anim end time
-			output.write_dword(animations[i].end);
 		}
 
 		output.close();

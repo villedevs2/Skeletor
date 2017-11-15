@@ -4,11 +4,11 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/quaternion.hpp"
-#include <vector>
-#include <gl/glew.h>
 #include "Shaders.h"
 #include <QImage>
 #include <QImageReader>
+
+#include <vector>
 
 using namespace std;
 

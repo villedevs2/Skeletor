@@ -1,3 +1,4 @@
+#if 0
 #include "AnimList.h"
 
 
@@ -113,3 +114,4 @@ void AnimList::getAnimations(vector<AnimListEntry> &animations)
 		animations.push_back(entry);
 	}
 }
+#endif

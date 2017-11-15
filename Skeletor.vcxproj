@@ -110,7 +110,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_MainWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Skeletor.cpp" />
     <ClCompile Include="src\AnimList.cpp" />
     <ClCompile Include="src\AnimTimeline.cpp" />
@@ -120,7 +119,6 @@
     <ClCompile Include="src\KeyframeTimeline.cpp" />
     <ClCompile Include="src\MainWindow.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Skeletor.cpp" />
     <ClCompile Include="src\VMFExport.cpp" />
   </ItemGroup>
   <ItemGroup>

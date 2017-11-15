@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtGui>
+#include <qwidget.h>
 #include <vector>
 
 using namespace std;

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QtGui>
-#include <gl/glew.h>
-//#include <QGLFunctions>
+#include <qopenglfunctions.h>
 #include <QGLWidget>
 
 #include "glm/glm.hpp"
@@ -20,7 +19,7 @@
 
 
 
-class GLWidget : public QGLWidget
+class GLWidget : public QGLWidget, private QOpenGLFunctions
 {
 	Q_OBJECT
 

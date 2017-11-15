@@ -61,8 +61,7 @@ void GLWidget::setAnimTime(int value)
 
 void GLWidget::initializeGL()
 {
-	//initializeGLFunctions();
-	glewInit();
+	initializeOpenGLFunctions();
 
 	QFile file;
 	QByteArray bytes;

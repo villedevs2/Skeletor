@@ -11,7 +11,6 @@
 #include "FBXMesh.h"
 #include "VMFExport.h"
 #include "AnimTimeline.h"
-#include "AnimList.h"
 
 class MainWindow : public QMainWindow
 {
@@ -49,8 +48,6 @@ private:
 	Mesh* m_mesh;
 	FBXMesh* m_fbxmesh;
 	VMFExport* m_vmf;
-
-	AnimList* m_animlist;
 
 private slots:
 	void importMesh();

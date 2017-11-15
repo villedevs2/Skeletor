@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 
 #include <QtGui>
@@ -93,3 +94,4 @@ private:
 	QGroupBox* m_addgroup;
 	QPushButton* m_remove_button;
 };
+#endif

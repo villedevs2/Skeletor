@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QtGui>
+#include <qslider.h>
+#include <qgroupbox.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qgridlayout.h>
 #include "KeyframeTimeline.h"
 
 class AnimTimeline : public QWidget

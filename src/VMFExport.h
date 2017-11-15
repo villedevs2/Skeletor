@@ -4,7 +4,6 @@
 
 #include "BinaryFile.h"
 #include "Mesh.h"
-#include "AnimList.h"
 
 using namespace std;
 
@@ -14,7 +13,7 @@ public:
 	VMFExport();
 	~VMFExport();
 
-	bool write(std::string filename, Mesh* mesh, vector<AnimList::AnimListEntry> &animations);
+	bool write(std::string filename, Mesh* mesh);
 
 private:
 	char* strip_path(const char* path);

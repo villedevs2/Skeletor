@@ -21,14 +21,14 @@ MainWindow::MainWindow()
 
 	// side widget
 	// ---------------------------------------------------------------------------
-	m_animlist = new AnimList(this);
-	m_animlist->setMinimumSize(400, 600);
+//	m_animlist = new AnimList(this);
+//	m_animlist->setMinimumSize(400, 600);
 
 	QWidget *side_widget = new QWidget();
 	QBoxLayout *side_layout = new QBoxLayout(QBoxLayout::TopToBottom);
 	side_layout->setSpacing(3);
 	side_layout->setMargin(0);
-	side_layout->addWidget(m_animlist);
+//	side_layout->addWidget(m_animlist);
 
 	side_widget->setLayout(side_layout);
 
@@ -119,11 +119,7 @@ bool MainWindow::exportMesh()
 
 	if (filename != NULL)
 	{
-		vector<AnimList::AnimListEntry> animations;
-
-		m_animlist->getAnimations(animations);
-
-		m_vmf->write(filename.toStdString(), m_mesh, animations);
+		m_vmf->write(filename.toStdString(), m_mesh);
 	}
 
 	return true;
