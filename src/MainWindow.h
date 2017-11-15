@@ -2,6 +2,9 @@
 
 #include "QMainWindow"
 #include "QAction"
+#include "qfiledialog.h"
+#include "qboxlayout.h"
+#include "qmenubar.h"
 
 #include "GLWidget.h"
 #include "assert.h"
