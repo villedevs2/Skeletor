@@ -2,8 +2,6 @@
 
 Mesh::Mesh()
 {
-	m_vbo = NULL;
-
 	reset();
 }
 
@@ -49,6 +47,7 @@ Mesh::SubMesh& Mesh::getSubMesh(int i)
 	return m_submesh[i];
 }
 
+/*
 void Mesh::loadTexture(std::string filename, GLuint texid)
 {
 	// strip path
@@ -119,9 +118,11 @@ void Mesh::loadTexture(std::string filename, GLuint texid)
 		}
 	}
 }
+*/
 
 void Mesh::bake()
 {
+	/*
 	if (m_vbo != NULL)
 		glDeleteBuffers(1, &m_vbo);
 
@@ -199,10 +200,12 @@ void Mesh::bake()
 	glBindBuffer(GL_ARRAY_BUFFER, NULL);
 
 	delete [] tmpvtx;
+	*/
 }
 
 void Mesh::render(DefaultShaderContext* context, int time)
 {
+	/*
 	if (m_vbo == NULL)
 		return;
 
@@ -228,17 +231,6 @@ void Mesh::render(DefaultShaderContext* context, int time)
 		glm::mat4 mat = glm::mat4();
 
 		//mat *= m_submesh[i].matrix;
-
-		/*
-		if (m_has_anim)
-		{
-			mat *= m_anim_transform;
-		}
-		else
-		{
-			mat *= m_matrix;
-		}
-		*/
 
 
 		// animate
@@ -302,6 +294,7 @@ void Mesh::render(DefaultShaderContext* context, int time)
 	glDisableVertexAttribArray(context->tex_coord);		
 //	glDisableVertexAttribArray(context->normal);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);	// TODO REMOVE
+	*/
 }
 
 

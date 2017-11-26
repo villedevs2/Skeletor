@@ -87,7 +87,6 @@ public:
 	void addSubMesh(Mesh::SubMesh submesh);
 	void bake();
 	void render(DefaultShaderContext* context, int time);
-	void loadTexture(std::string filename, GLuint texid);
 	void setTime(int start, int end);
 	int getStartTime();
 	int getEndTime();
@@ -98,9 +97,7 @@ private:
 	void findKeyframe(Mesh::SubMesh& mesh, int time, int* position, int* rotation, int* scale);
 
 	vector<SubMesh> m_submesh;
-	GLuint m_vbo;
 	vector<BakedSubMesh> m_baked_submesh;
-	vector<GLuint> m_textures;
 
 	int m_start_time;
 	int m_end_time;
