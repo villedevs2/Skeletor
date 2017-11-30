@@ -14,8 +14,8 @@ GLWidget::GLWidget(QWidget *parent, Mesh *mesh)
 
 	m_zoom = 250.0f;
 
-	m_angle_x = 45.0f;
-	m_angle_y = -25.0f;
+	m_angle_x = 0.0f;
+	m_angle_y = 25.0f;
 
 	m_anim_time = 0;
 }
@@ -321,8 +321,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 		int dx = event->globalX() - m_lastmousepos.x();
 		int dy = event->globalY() - m_lastmousepos.y();
 
-		m_angle_x -= float(dx) * 0.1f;
-		m_angle_y += float(dy) * 0.1f;
+		m_angle_x -= float(dx) * 0.001f;
+		m_angle_y -= float(dy) * 0.001f;
 	//	if (m_angle_y < -89.0f) m_angle_y = -89.0f;
 	//	if (m_angle_y > 89.0f) m_angle_y = 89.0f;
 
