@@ -1,23 +1,18 @@
 varying vec4			v_pos;
 varying vec2			v_texcoord;
 varying vec3			v_normal;
-uniform vec4			a_light_pos[4];
-uniform vec4			a_light_diff_color[4];
-uniform vec4			a_light_spec_color[4];
-uniform vec4			a_material_diff_color;
-uniform vec4			a_material_spec_color;
-uniform float			a_material_shininess;
+varying vec3			v_light;
 uniform sampler2D		s_diff_texture;
 uniform sampler2D		s_bump_texture;
 
 void main()
 {
+	/*
 	//vec4 light_diff = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	//vec4 light_spec = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	//vec4 material_diff = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	//vec4 material_spec = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	//float shininess = 50.0f;
-
 
 	vec3 normal = normalize(v_normal);
 
@@ -45,8 +40,14 @@ void main()
 		}
 	}
 	
-	//gl_FragColor = (texture2D(s_diff_texture, v_texcoord) * diffuse) + specular;
+	gl_FragColor = (texture2D(s_diff_texture, v_texcoord) * diffuse) + specular;
+	*/
 
-	gl_FragColor = texture2D(s_diff_texture, v_texcoord);
-	//gl_FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	float ambient = 0.2;
+	float col = clamp(dot(-v_light, v_normal), 0.0, 1.0);
+
+	//gl_FragColor = (vec4(col, col, col, 1.0) + ambient) * vec(1.0, 1.0, 1.0, 1.0);
+	gl_FragColor = vec4(v_normal.x, v_normal.y, v_normal.z, 1.0);
+	//gl_FragColor = vec4(v_normal.x, v_normal.y, v_normal.z, 1.0) * texture2D(s_diff_texture, v_texcoord);
+	//gl_FragColor = texture2D(s_diff_texture, v_texcoord);
 }

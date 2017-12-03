@@ -147,23 +147,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh)
 				output.write_float(sb.uvcoord[i].y);
 			}
 
-			// normals
-			// --------------------------------------------------------------------------
-
-			// normal id
-			output.write_dword(VMF_NRM_ID);
-
-			// number of normals
-			output.write_dword(num_normals);
-
-			// normal structures
-			for (int i=0; i < num_normals; i++)
-			{
-				output.write_float(sb.normal[i].x);
-				output.write_float(sb.normal[i].y);
-				output.write_float(sb.normal[i].z);
-			}
-
 			// faces
 			// --------------------------------------------------------------------------
 
@@ -184,9 +167,15 @@ bool VMFExport::write(std::string filename, Mesh* mesh)
 				output.write_dword(sb.tris[i].uv[1]);
 				output.write_dword(sb.tris[i].uv[2]);
 
-				output.write_dword(sb.tris[i].n[0]);
-				output.write_dword(sb.tris[i].n[1]);
-				output.write_dword(sb.tris[i].n[2]);
+				output.write_float(sb.tris[i].normal[0].x);
+				output.write_float(sb.tris[i].normal[0].y);
+				output.write_float(sb.tris[i].normal[0].z);
+				output.write_float(sb.tris[i].normal[1].x);
+				output.write_float(sb.tris[i].normal[1].y);
+				output.write_float(sb.tris[i].normal[1].z);
+				output.write_float(sb.tris[i].normal[2].x);
+				output.write_float(sb.tris[i].normal[2].y);
+				output.write_float(sb.tris[i].normal[2].z);
 			}
 		}
 

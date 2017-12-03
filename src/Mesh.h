@@ -20,6 +20,7 @@ public:
 		int p[3];
 		int uv[3];
 		int n[3];
+		glm::vec3 normal[3];
 	};
 
 	struct Vertex

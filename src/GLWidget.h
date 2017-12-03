@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <qopenglfunctions.h>
 #include <QGLWidget>
+#include <qglshaderprogram.h>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -64,11 +65,14 @@ private:
 
 	QColor m_bgcolor;
 
-	GLuint m_default_shader;
-	GLuint m_grid_shader;
+	//GLuint m_default_shader;
+	//GLuint m_grid_shader;
 
 	DefaultShaderContext m_default_shader_context;
 	DefaultShaderContext m_grid_shader_context;
+
+	QGLShaderProgram* m_standard_program;
+	QGLShaderProgram* m_grid_program;
 
 	float m_viewport_width;
 	float m_viewport_height;

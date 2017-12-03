@@ -131,7 +131,13 @@ void FBXMesh::processMesh(FbxMesh* mesh)
 			tri.uv[pv] = mesh->GetTextureUVIndex(i, pv);
 			//tri.uv[pv] = (i * 3) + pv;
 			//tri.uv[pv] = mesh->GetPolygonVertex(i, pv);
+
+			FbxVector4 normal;
+			mesh->GetPolygonVertexNormal(i, pv, normal);
+			tri.normal[pv] = glm::vec3(normal[0], normal[1], normal[2]);
 		}
+
+		
 
 		submesh.tris.push_back(tri);
 	}

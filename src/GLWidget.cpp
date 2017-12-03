@@ -71,23 +71,24 @@ void GLWidget::initializeGL()
 	file.setFileName("default_vertshader.glsl");
 	file.open(QIODevice::ReadOnly);
 	bytes = file.readAll();
-	std::string default_vs_code(bytes);
+	QString default_vs_code(bytes);
 	file.close();
 
 	file.setFileName("default_fragshader.glsl");
 	file.open(QIODevice::ReadOnly);
 	bytes = file.readAll();
-	std::string default_fs_code(bytes);
+	QString default_fs_code(bytes);
 	file.close();
 
 	file.setFileName("grid_fragshader.glsl");
 	file.open(QIODevice::ReadOnly);
 	bytes = file.readAll();
-	std::string grid_fs_code(bytes);
+	QString grid_fs_code(bytes);
 	file.close();
 
 	const  char *vert_code, *frag_code, *grid_frag_code;
 
+	/*
 	GLuint default_vert_shader = glCreateShader(GL_VERTEX_SHADER);
 	vert_code = default_vs_code.c_str();
 	glShaderSource(default_vert_shader, 1, &vert_code, NULL);
@@ -97,43 +98,66 @@ void GLWidget::initializeGL()
 	frag_code = default_fs_code.c_str();
 	glShaderSource(default_frag_shader, 1, &frag_code, NULL);
 	glCompileShader(default_frag_shader);
+	*/
 
+	/*
 	GLuint grid_frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	grid_frag_code = grid_fs_code.c_str();
 	glShaderSource(grid_frag_shader, 1, &grid_frag_code, NULL);
 	glCompileShader(grid_frag_shader);
+	*/
 
+	/*
 	m_default_shader = glCreateProgram();
 	glAttachShader(m_default_shader, default_vert_shader);
 	glAttachShader(m_default_shader, default_frag_shader);
 	glLinkProgram(m_default_shader);
+	*/
 
-	m_default_shader_context.position				= glGetAttribLocation(m_default_shader, "a_position");
-	m_default_shader_context.normal					= glGetAttribLocation(m_default_shader, "a_normal");
-	m_default_shader_context.tex_coord				= glGetAttribLocation(m_default_shader, "a_texcoord");
-	m_default_shader_context.light_pos				= glGetUniformLocation(m_default_shader, "a_light_pos");
-	m_default_shader_context.light_diff_color		= glGetUniformLocation(m_default_shader, "a_light_diff_color");
-	m_default_shader_context.light_spec_color		= glGetUniformLocation(m_default_shader, "a_light_spec_color");
-	m_default_shader_context.material_diff_color	= glGetUniformLocation(m_default_shader, "a_material_diff_color");
-	m_default_shader_context.material_spec_color	= glGetUniformLocation(m_default_shader, "a_material_spec_color");
-	m_default_shader_context.material_shininess		= glGetUniformLocation(m_default_shader, "a_material_shininess");
-	m_default_shader_context.diff_sampler			= glGetUniformLocation(m_default_shader, "s_diff_texture");
-	m_default_shader_context.bump_sampler			= glGetUniformLocation(m_default_shader, "s_bump_texture");
-	m_default_shader_context.vp_matrix				= glGetUniformLocation(m_default_shader, "m_vp_matrix");
-	m_default_shader_context.matrix					= glGetUniformLocation(m_default_shader, "m_matrix");
+	m_standard_program = new QGLShaderProgram(this);
+	m_standard_program->addShaderFromSourceCode(QGLShader::Vertex, default_vs_code);
+	m_standard_program->addShaderFromSourceCode(QGLShader::Fragment, default_fs_code);
+	m_standard_program->link();
 
+	QString error = m_standard_program->log();
+	std::string errors = error.toStdString();
 
+	m_default_shader_context.position				= m_standard_program->attributeLocation("a_position");
+	m_default_shader_context.normal					= m_standard_program->attributeLocation("a_normal");
+	m_default_shader_context.tex_coord				= m_standard_program->attributeLocation("a_texcoord");
+	m_default_shader_context.light_pos				= m_standard_program->attributeLocation("a_light_pos");
+	m_default_shader_context.light_diff_color		= m_standard_program->attributeLocation("a_light_diff_color");
+	m_default_shader_context.light_spec_color		= m_standard_program->attributeLocation("a_light_spec_color");
+	m_default_shader_context.material_diff_color	= m_standard_program->attributeLocation("a_material_diff_color");
+	m_default_shader_context.material_spec_color	= m_standard_program->attributeLocation("a_material_spec_color");
+	m_default_shader_context.material_shininess		= m_standard_program->attributeLocation("a_material_shininess");
+	m_default_shader_context.diff_sampler			= m_standard_program->uniformLocation("s_diff_texture");
+	m_default_shader_context.bump_sampler			= m_standard_program->uniformLocation("s_bump_texture");
+	m_default_shader_context.vp_matrix				= m_standard_program->uniformLocation("m_vp_matrix");
+	m_default_shader_context.v_matrix				= m_standard_program->uniformLocation("m_v_matrix");
+	m_default_shader_context.matrix					= m_standard_program->uniformLocation("m_matrix");
+	m_default_shader_context.light					= m_standard_program->uniformLocation("u_light");
 
+	/*
 	m_grid_shader = glCreateProgram();
 	glAttachShader(m_grid_shader, default_vert_shader);
 	glAttachShader(m_grid_shader, grid_frag_shader);
 	glLinkProgram(m_grid_shader);
+	*/
 
-	m_grid_shader_context.position					= glGetAttribLocation(m_grid_shader, "a_position");
-	m_grid_shader_context.normal					= glGetAttribLocation(m_grid_shader, "a_normal");
-	m_grid_shader_context.tex_coord					= glGetAttribLocation(m_grid_shader, "a_texcoord");
-	m_grid_shader_context.vp_matrix					= glGetUniformLocation(m_grid_shader, "m_vp_matrix");
-	m_grid_shader_context.matrix					= glGetUniformLocation(m_grid_shader, "m_matrix");
+	m_grid_program = new QGLShaderProgram(this);
+	m_grid_program->addShaderFromSourceCode(QGLShader::Vertex, default_vs_code);
+	m_grid_program->addShaderFromSourceCode(QGLShader::Fragment, grid_fs_code);
+	m_grid_program->link();
+
+	error = m_grid_program->log();
+	errors = error.toStdString();
+
+	m_grid_shader_context.position					= m_grid_program->attributeLocation("a_position");
+	m_grid_shader_context.normal					= m_grid_program->attributeLocation("a_normal");
+	m_grid_shader_context.tex_coord					= m_grid_program->attributeLocation("a_texcoord");
+	m_grid_shader_context.vp_matrix					= m_grid_program->uniformLocation("m_vp_matrix");
+	m_grid_shader_context.matrix					= m_grid_program->uniformLocation("m_matrix");
 
 
 	glEnable(GL_CULL_FACE);
@@ -237,9 +261,11 @@ void GLWidget::paintGL()
 
 
 	// render meshes
-	glUseProgram(m_default_shader);
+	//glUseProgram(m_default_shader);
+	m_standard_program->bind();
 
 	glUniformMatrix4fv(m_default_shader_context.vp_matrix, 1, false, glm::value_ptr(camera_vp_matrix));
+	glUniformMatrix4fv(m_default_shader_context.v_matrix, 1, false, glm::value_ptr(camera_view_matrix));
 	glUniform1i(m_default_shader_context.diff_sampler, 0);
 	glUniform1i(m_default_shader_context.bump_sampler, 1);
 
@@ -249,7 +275,8 @@ void GLWidget::paintGL()
 
 
 	// draw grid
-	glUseProgram(m_grid_shader);
+	//glUseProgram(m_grid_shader);
+	m_grid_program->bind();
 
 	glUniformMatrix4fv(m_grid_shader_context.vp_matrix, 1, false, glm::value_ptr(camera_vp_matrix));
 	glUniform1i(m_grid_shader_context.diff_sampler, 0);
@@ -468,9 +495,10 @@ void GLWidget::bake()
 			tmpvtx[vbo_index+0].uvcoord = submesh.uvcoord[uv0];
 			tmpvtx[vbo_index+1].uvcoord = submesh.uvcoord[uv1];
 			tmpvtx[vbo_index+2].uvcoord = submesh.uvcoord[uv2];
-	//		tmpvtx[vbo_index+0].normal = m_submesh[i].normal[v0];
-	//		tmpvtx[vbo_index+1].normal = m_submesh[i].normal[v1];
-	//		tmpvtx[vbo_index+2].normal = m_submesh[i].normal[v2];
+
+			tmpvtx[vbo_index + 0].normal = submesh.tris[tri].normal[0];
+			tmpvtx[vbo_index + 1].normal = submesh.tris[tri].normal[1];
+			tmpvtx[vbo_index + 2].normal = submesh.tris[tri].normal[2];
 
 			vbo_index += 3;
 		}
@@ -506,8 +534,8 @@ void GLWidget::renderMesh(DefaultShaderContext* context, int time)
 	glEnableVertexAttribArray(context->position);
 	glVertexAttribPointer(context->tex_coord, 2, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, uvcoord));
 	glEnableVertexAttribArray(context->tex_coord);
-	//	glVertexAttribPointer(context->normal, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, norm));
-	//	glEnableVertexAttribArray(context->normal);
+	glVertexAttribPointer(context->normal, 3, GL_FLOAT, false, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+	glEnableVertexAttribArray(context->normal);
 
 	for (int i=0; i < (int)(m_baked_submesh.size()); i++)
 	{
@@ -577,6 +605,6 @@ void GLWidget::renderMesh(DefaultShaderContext* context, int time)
 
 	glDisableVertexAttribArray(context->position);
 	glDisableVertexAttribArray(context->tex_coord);
-	//	glDisableVertexAttribArray(context->normal);
+	glDisableVertexAttribArray(context->normal);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);	// TODO REMOVE
 }
