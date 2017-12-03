@@ -65,10 +65,6 @@ bool VMFExport::write(std::string filename, Mesh* mesh)
 			submesh_structure_length += 4;								// face id
 			submesh_structure_length += 4;								// num of faces
 			submesh_structure_length += (int)(num_faces) * 36;			// face structures
-			submesh_structure_length += 4;								// anim id
-			submesh_structure_length += 4;								// num of pos keyframes
-			submesh_structure_length += 4;								// num of rot keyframes
-			submesh_structure_length += 4;								// num of scale keyframes
 
 			// submesh header
 			// --------------------------------------------------------------------------

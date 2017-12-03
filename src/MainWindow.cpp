@@ -107,6 +107,8 @@ void MainWindow::importMesh()
 			int time = submesh.pos_keys[i].time;
 			m_anim_timeline->insertKeyframe(time);
 		}
+
+		m_opengl->bake();
 	}
 }
 

@@ -35,6 +35,7 @@ public slots:
 	void setCameraHeight(int);
 	void animate();
 	void setAnimTime(int);
+	void bake();
 
 protected:
 	void initializeGL();
@@ -45,6 +46,22 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 
 private:
+	struct Vertex
+	{
+		glm::vec3 position;
+		glm::vec2 uvcoord;
+		glm::vec3 normal;
+	};
+
+	struct BakedSubMesh
+	{
+		int vbo_index;
+		int num_verts;
+	};
+
+	void loadTexture(std::string filename, GLuint texid);
+	void renderMesh(DefaultShaderContext* context, int time);
+
 	QColor m_bgcolor;
 
 	GLuint m_default_shader;
@@ -71,4 +88,8 @@ private:
 	float m_angle_y;
 
 	int m_anim_time;
+
+	vector<BakedSubMesh> m_baked_submesh;
+	vector<GLuint> m_textures;
+	GLuint m_vbo;
 };
