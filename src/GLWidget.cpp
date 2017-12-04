@@ -269,6 +269,8 @@ void GLWidget::paintGL()
 	glUniform1i(m_default_shader_context.diff_sampler, 0);
 	glUniform1i(m_default_shader_context.bump_sampler, 1);
 
+	glUniform3f(m_default_shader_context.light, 0.0f, 0.0f, -1.0f);
+
 	//m_mesh->render(&m_default_shader_context, m_anim_time);
 	renderMesh(&m_default_shader_context, m_anim_time);
 

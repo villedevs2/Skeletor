@@ -47,7 +47,8 @@ void main()
 	float col = clamp(dot(-v_light, v_normal), 0.0, 1.0);
 
 	//gl_FragColor = (vec4(col, col, col, 1.0) + ambient) * vec(1.0, 1.0, 1.0, 1.0);
-	gl_FragColor = vec4(v_normal.x, v_normal.y, v_normal.z, 1.0);
+	//gl_FragColor = vec4(v_normal.x, v_normal.y, v_normal.z, 1.0);
 	//gl_FragColor = vec4(v_normal.x, v_normal.y, v_normal.z, 1.0) * texture2D(s_diff_texture, v_texcoord);
+	gl_FragColor = (vec4(col, col, col, 1)) * texture2D(s_diff_texture, v_texcoord);
 	//gl_FragColor = texture2D(s_diff_texture, v_texcoord);
 }
