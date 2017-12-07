@@ -18,8 +18,8 @@ public:
 private:
 	char* strip_path(const char* path);
 
-	static const int VMF_HEADER_VERSION = 0x0004;
-	static const int VMF_MESH_VERSION = 0x0004;
+	static const int VMF_HEADER_VERSION = 0x0005;
+	static const int VMF_MESH_VERSION = 0x0005;
 
 	static const unsigned int VMF_FORMAT_ID = 0x564d4658;
 	static const unsigned int VMF_MESH_ID = 0x53424d58;

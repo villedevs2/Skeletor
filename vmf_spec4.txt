@@ -33,13 +33,6 @@ n bytes		| tex vertex structures
 4 bytes		| FCXX ID
 4 bytes		| number of faces
 n bytes		| face structures
-4 bytes		| KEYX ID
-4 bytes		| number of position keyframes
-4 bytes		| number of rotation keyframes
-4 bytes		| number of scale keyframes
-n bytes		| position keyframe structures
-n bytes		| rotation keyframe structures
-n bytes		| scale keyframe structures
 
 
 Texture structure
